@@ -17,7 +17,7 @@
 ;    Carlo Sciolla - initial implementation
 ;    Peter Monks   - contributor
 
-(def alfresco-version "4.2.f")
+(def alfresco-version "5.0.a")
 
 (defproject org.clojars.lambdalf/lambdalf "2.0.0-SNAPSHOT"
   :title            "lambdalf"
@@ -31,7 +31,7 @@
                 ]
   :dependencies [
                   [org.clojure/clojure     "1.6.0"]
-                  [org.clojure/tools.nrepl "0.2.3"]
+                  [org.clojure/tools.nrepl "0.2.4"]
                   ; WARNING: do _not_ add test, provided or runtime dependencies here as they will be included in the uberjar,
                   ; regardless of scope.  See https://github.com/technomancy/leiningen/issues/741 for an explanation of why
                   ; this occurs.
