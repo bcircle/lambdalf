@@ -17,7 +17,10 @@
 ;    Carlo Sciolla - initial implementation
 ;    Peter Monks   - contributor
 
-(def alfresco-version "5.0.a")
+; Make sure these line up to those provided in the specified Alfresco version or weird things can happen...
+(def alfresco-version    "5.0.a")
+(def spring-version      "3.0.5.RELEASE")
+(def spring-surf-version "1.2.0")
 
 (defproject org.clojars.lambdalf/lambdalf "2.0.0-SNAPSHOT"
   :title            "lambdalf"
@@ -30,31 +33,29 @@
                   ["alfresco.public" "https://artifacts.alfresco.com/nexus/content/groups/public/"]
                 ]
   :dependencies [
+                  ; Dependencies that will be included in the AMP - other dependencies should go in the appropriate profile below
                   [org.clojure/clojure     "1.6.0"]
                   [org.clojure/tools.nrepl "0.2.4"]
-                  ; WARNING: do _not_ add test, provided or runtime dependencies here as they will be included in the uberjar,
-                  ; regardless of scope.  See https://github.com/technomancy/leiningen/issues/741 for an explanation of why
-                  ; this occurs.
                 ]
-  :profiles {:dev      { :plugins [[lein-amp "0.3.0"]] }
-             :uberjar  { :aot :all }
+  :profiles {:dev      { :plugins [[lein-amp "0.4.0-SNAPSHOT"]] }
              :test     { :dependencies [
-                                         [clj-http                       "0.9.2"           :scope "test"]
-                                         [tk.skuro.alfresco/h2-support   "1.6"             :scope "test"]
-                                         [com.h2database/h2              "1.3.174"         :scope "test"]
-                                         [org.eclipse.jetty/jetty-runner "9.2.1.v20140609" :scope "test"]
+                                         [clj-http                       "1.0.0"]
+                                         [tk.skuro.alfresco/h2-support   "1.6"]
+                                         [com.h2database/h2              "1.4.181"]
+                                         [org.eclipse.jetty/jetty-runner "9.2.2.v20140723" :exclusions [org.eclipse.jetty/jetty-jsp]]
                                        ] }
              :provided { :dependencies [
-                                         [org.alfresco/alfresco-core                            ~alfresco-version :scope "provided"]
-                                         [org.alfresco/alfresco-data-model                      ~alfresco-version :scope "provided"]
-                                         [org.alfresco/alfresco-mbeans                          ~alfresco-version :scope "provided"]
-                                         [org.alfresco/alfresco-remote-api                      ~alfresco-version :scope "provided"]
-                                         [org.alfresco/alfresco-repository                      ~alfresco-version :scope "provided"]
-                                         [org.springframework/spring-context                    "3.0.5.RELEASE"  :scope "provided"]
-                                         [org.springframework/spring-beans                      "3.0.5.RELEASE"  :scope "provided"]
-                                         [org.springframework.extensions.surf/spring-webscripts "1.2.0"          :scope "provided"]
+                                         [org.alfresco/alfresco-core                            ~alfresco-version]
+                                         [org.alfresco/alfresco-data-model                      ~alfresco-version]
+                                         [org.alfresco/alfresco-mbeans                          ~alfresco-version]
+                                         [org.alfresco/alfresco-remote-api                      ~alfresco-version]
+                                         [org.alfresco/alfresco-repository                      ~alfresco-version]
+                                         [org.springframework/spring-context                    ~spring-version]
+                                         [org.springframework/spring-beans                      ~spring-version]
+                                         [org.springframework.extensions.surf/spring-webscripts ~spring-surf-version]
                                        ] }
             }
+  :aot               [alfresco]
   :source-paths      ["src/clojure"]
   :java-source-paths ["src/java"]
   :resource-paths    ["src/resource"]
