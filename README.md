@@ -66,7 +66,7 @@ You may also query the status of the nREPL server via an HTTP GET:
 
 ## Developing with lambdalf
 
-lambdalf is (NOT YET!) available as a Maven artifact from [Clojars](https://clojars.org/org.clojars.lambdalf/lambdalf).
+lambdalf is available as a Maven artifact from [Clojars](https://clojars.org/org.clojars.lambdalf/lambdalf).
 Plonk the following in your project.clj :plugins, `lein deps` and you should be good to go:
 
 ```clojure
