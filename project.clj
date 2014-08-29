@@ -22,7 +22,7 @@
 (def spring-version      "3.0.5.RELEASE")
 (def spring-surf-version "1.2.0")
 
-(defproject org.clojars.lambdalf/lambdalf "0.1.0"
+(defproject org.clojars.lambdalf/lambdalf "0.2.0-SNAPSHOT"
   :title            "lambdalf"
   :description      "Lambdalf -- Clojure support for Alfresco"
   :url              "https://github.com/lambdalf/lambdalf"
