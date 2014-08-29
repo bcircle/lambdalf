@@ -22,7 +22,7 @@
 (def spring-version      "3.0.5.RELEASE")
 (def spring-surf-version "1.2.0")
 
-(defproject org.clojars.lambdalf/lambdalf "0.1.0-SNAPSHOT"
+(defproject org.clojars.lambdalf/lambdalf "0.1.0"
   :title            "lambdalf"
   :description      "Lambdalf -- Clojure support for Alfresco"
   :url              "https://github.com/lambdalf/lambdalf"
@@ -37,7 +37,7 @@
                   [org.clojure/clojure     "1.6.0"]
                   [org.clojure/tools.nrepl "0.2.4"]
                 ]
-  :profiles {:dev      { :plugins [[lein-amp "0.4.0-SNAPSHOT"]] }
+  :profiles {:dev      { :plugins [[lein-amp "0.4.0"]] }
              :test     { :dependencies [
                                          [clj-http                       "1.0.0"]
                                          [tk.skuro.alfresco/h2-support   "1.6"]
