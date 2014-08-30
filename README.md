@@ -8,28 +8,27 @@ This library adds [Clojure](http://www.clojure.org/) support to the open source
 
  * adds an idiomatic Clojure wrapper around (an increasing %age of) the [Alfresco Java API](http://wiki.alfresco.com/wiki/Java_Foundation_API)
  * provides support for implementing Alfresco extension points in Clojure, including
-   [behaviours](https://github.com/pmonks/lambdalf/blob/master/src/clojure/alfresco/behave.clj), and
+   [behaviours](https://github.com/lambdalf/lambdalf/blob/master/src/clojure/alfresco/behave.clj), and
    [web scripts](https://github.com/lambdalf/lambdalf/blob/master/src/clojure/spring/surf/webscript.clj)
  * adds an nREPL server to the Alfresco server (disabled by default - requires administrator rights to enable),
    allowing for productive REPL-style experimentation and development within Alfresco
  * packages all of this, along with the Clojure runtime, into an [Alfresco Module Package](http://wiki.alfresco.com/wiki/AMP_Files)
-   (AMP file) that 3rd party code can depend on (thereby avoiding conflicts between different Clojure extensions)
+   (AMP file) that 3rd party code can depend on (thereby minimising conflicts between multiple independent Clojure extensions)
 
 ## Packaging
 Due to the way Alfresco's AMP module mechanism works, lambdalf is shipped as an AMP file in addition to the clojars
 artifacts (which are used for development only).  It is this AMP artifact that should be deployed to a running
 Alfresco server, prior to the deployment of your own AMP.
 
-Your code should also be packaged as an AMP (via the [lein amp plugin](https://github.com/pmonks/lein-amp)), and must
+Your code should also be packaged as an AMP (using the [lein amp plugin](https://github.com/lambdalf/lein-amp)), and must
 include a module dependency on lambdalf in order to prevent an Alfresco administrator from inadvertently deploying
-your AMP without first deploying the lambdalf AMP. In the near future the lein-amp template will [configure these
-dependencies up automatically](https://github.com/mstang/alfresco-amp-template/issues/1).
+your AMP without first deploying the lambdalf AMP. If you use the [lein AMP template](https://github.com/lambdalf/amp-template)
+(strongly recommended) to create your project, these dependencies will be configured for you automatically.
 
 ## Installing lambdalf into Alfresco
 
-Download the latest lambdalf AMP file from the [releases page](https://github.com/lambdalf/lambdalf/releases) (NOT YET
-AVAILABLE!), then install it just like any other AMP (i.e. using Alfresco's
-[MMT tool](https://wiki.alfresco.com/wiki/Module_Management_Tool)).
+Download the latest lambdalf AMP file from the [releases page](https://github.com/lambdalf/lambdalf/releases), then
+install it just like any other AMP (i.e. using Alfresco's [MMT tool](https://wiki.alfresco.com/wiki/Module_Management_Tool)).
 
 ### Opening a REPL
 
@@ -66,14 +65,11 @@ You may also query the status of the nREPL server via an HTTP GET:
 
 ## Developing with lambdalf
 
-lambdalf is available as a Maven artifact from [Clojars](https://clojars.org/org.clojars.lambdalf/lambdalf).
-Plonk the following in your project.clj :plugins, `lein deps` and you should be good to go:
+The best way to get started developing with lambdalf is to use the [lein AMP template](https://github.com/lambdalf/amp-template)
+to generate a skeleton AMP project for you.  We highly recommend starting out this way to get familiar with the structure of an
+AMP project, and to get familiarity with lambdalf, AMPs and the deployment process.
 
-```clojure
-[org.clojars.lambdalf/lambdalf "#.#.#"]
-```
-
-The latest version is:
+For those upgrading an existing AMP project, the latest version of lambdalf is:
 
 [![version](https://clojars.org/org.clojars.lambdalf/lambdalf/latest-version.svg)](https://clojars.org/org.clojars.lambdalf/lambdalf)
 
