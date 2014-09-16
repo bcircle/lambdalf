@@ -18,7 +18,7 @@
 ;    Peter Monks   - contributor
 
 ; Make sure these line up to those provided in the specified Alfresco version or weird things can happen...
-(def alfresco-version    "5.0.a")
+(def alfresco-version    "4.2.f")
 (def spring-version      "3.0.5.RELEASE")
 (def spring-surf-version "1.2.0")
 
@@ -35,14 +35,14 @@
   :dependencies [
                   ; Dependencies that will be included in the AMP - other dependencies should go in the appropriate profile below
                   [org.clojure/clojure     "1.6.0"]
-                  [org.clojure/tools.nrepl "0.2.4"]
+                  [org.clojure/tools.nrepl "0.2.6"]
                 ]
-  :profiles {:dev      { :plugins [[lein-amp "0.4.0"]] }
+  :profiles {:dev      { :plugins [[lein-amp "0.6.0"]] }
              :test     { :dependencies [
                                          [clj-http                       "1.0.0"]
                                          [tk.skuro.alfresco/h2-support   "1.6"]
                                          [com.h2database/h2              "1.4.181"]
-                                         [org.eclipse.jetty/jetty-runner "9.2.2.v20140723" :exclusions [org.eclipse.jetty/jetty-jsp]]
+                                         [org.eclipse.jetty/jetty-runner "9.2.3.v20140905" :exclusions [org.eclipse.jetty/jetty-jsp]]
                                        ] }
              :provided { :dependencies [
                                          [org.alfresco/alfresco-core                            ~alfresco-version]
