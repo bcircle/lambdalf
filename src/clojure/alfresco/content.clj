@@ -27,6 +27,12 @@
   [node]
   (.getContentInputStream (.getReader (content-service) node ContentModel/PROP_CONTENT)))
 
+(defn get-reader
+  "Returns the ContentReader for the given node & property (defaults to cm:content).
+  Should not normally be used directly - read! is preferable."
+  ([node]          (get-reader node ContentModel/PROP_CONTENT))
+  ([node property] (.getReader (content-service) node property)))
+
 ;; as seen on
 ;; https://groups.google.com/group/clojure/browse_thread/thread/e5fb47befe8b9199
 ;; TODO: make sure we're not breaking utf-8 support
