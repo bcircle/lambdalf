@@ -52,7 +52,7 @@
 
 (def ^:private policies
   "A list of all of the Alfresco policies supported by lambdalf (note: doesn't include all of the available policies).
-  This list is used by the gen-policy-registration-fns macro to generate the various registration methods and Alfresco
+  This list is used by the gen-policy-registration-fns macro to generate the various registration functions and Alfresco
   Java API interop boilerplate."
   [
     ;clojure-fn-name         alfresco-policy-class                                                      policy-method             policy-method-parameters
