@@ -33,6 +33,46 @@
   ([node]          (get-reader node ContentModel/PROP_CONTENT))
   ([node property] (.getReader (content-service) node property)))
 
+(defn size
+  "Returns the size (in bytes) of the given content property (defaults to cm:content)
+  of the given node.  Returns nil if the node doesn't have that property."
+  ([node] (size node ContentModel/PROP_CONTENT))
+  ([node property]
+    (let [reader (get-reader node property)]
+      (if (not (nil? reader))
+        (.getSize reader)
+        nil))))
+
+(defn encoding
+  "Returns the encoding of the given content property (defaults to cm:content)
+  of the given node.  Returns nil if the node doesn't have that property."
+  ([node] (encoding node ContentModel/PROP_CONTENT))
+  ([node property]
+    (let [reader (get-reader node property)]
+      (if (not (nil? reader))
+        (.getEncoding reader)
+        nil))))
+
+(defn locale
+  "Returns the java.util.Locale of the given content property (defaults to cm:content)
+  of the given node.  Returns nil if the node doesn't have that property."
+  ([node] (locale node ContentModel/PROP_CONTENT))
+  ([node property]
+    (let [reader (get-reader node property)]
+      (if (not (nil? reader))
+        (.getLocale reader)
+        nil))))
+
+(defn mime-type
+  "Returns the MIME type of the given content property (defaults to cm:content)
+  of the given node.  Returns nil if the node doesn't have that property."
+  ([node] (mime-type node ContentModel/PROP_CONTENT))
+  ([node property]
+    (let [reader (get-reader node property)]
+      (if (not (nil? reader))
+        (.getMimetype reader)
+        nil))))
+
 ;; as seen on
 ;; https://groups.google.com/group/clojure/browse_thread/thread/e5fb47befe8b9199
 ;; TODO: make sure we're not breaking utf-8 support
