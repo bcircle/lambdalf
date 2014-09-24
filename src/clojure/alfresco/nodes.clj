@@ -105,6 +105,7 @@
   (.toString n))
 
 (extend-protocol Node
+  ; Implementation for NodeRefs
   NodeRef
 
   (aspect? [node aspect] (.hasAspect (node-service) node (m/qname aspect)))
@@ -184,4 +185,22 @@
 
   (set-type!
    [type node]
-    (.setType (node-service) node (m/qname type))))
+    (.setType (node-service) node (m/qname type)))
+
+  ; "Implementation" for nil - ensures nils "flow through" without exceptions
+  nil
+  (aspect? [this aspect] nil)
+  (properties [this] nil)
+  (property [this prop] nil)
+  (set-properties! [this & prop-defs] nil)
+  (aspects [this] nil)
+  (dir? [this] nil)
+  (site? [this] nil)
+  (create-child-assoc [this propmap] nil)
+  (children [this] nil)
+  (parent [this] nil)
+  (delete! [this] nil)
+  (add-aspect! [this aspect props] nil)
+  (del-aspect! [this aspect] nil)
+  (type-qname [this] nil)
+  (set-type! [this type] nil))
