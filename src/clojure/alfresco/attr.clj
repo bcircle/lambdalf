@@ -14,6 +14,7 @@
 ; limitations under the License.
 
 (ns alfresco.attr
+  (:refer-clojure :exclude [get set! list])
   (:require [clojure.string :as s]
             [alfresco.core  :as c]
             [alfresco.nodes :as n])
@@ -32,8 +33,8 @@
   ([namespace name]    (into-array Serializable [namespace name]))
   ([namespace name id] (into-array Serializable [namespace name id])))
 
-(defn- split-keys
-  "Splits keys from the native attribute service into a vector of three elements (some of which may be nil)."
+(defn- deconstruct-keys
+  "Deconstructs keys from the native attribute service into a vector of three elements (some of which may be nil)."
   [keys]
   (condp = (alength keys)
     1 [(aget keys 0) nil           nil]
@@ -42,13 +43,13 @@
 
 (defn- handle-attribute
   [result attr-id value keys]
-  (let [[namespace name id] (split-keys keys)]
+  (let [[namespace name id] (deconstruct-keys keys)]
     (conj result { :namespace namespace
                    :name      name
                    :id        id
                    :value     value })))
 
-(defn- list-attrs-impl
+(defn- list-impl
   "Private implementation of list-attrs."
   [keys]
   (let [result   (atom [])
@@ -64,17 +65,21 @@
   [namespace name id]
   (.exists (attribute-service) (construct-keys namespace name id)))
 
-(defn list-attrs
-  "List all attributes in the given namespace, or namespace+name."
-  ([namespace]      (list-attrs-impl (construct-keys namespace)))
-  ([namespace name] (list-attrs-impl (construct-keys namespace name))))
+(defn list
+  "List all attributes in the given namespace, or namespace+name.  Result is a vector of maps, each map containing the keys:
+  :namespace - the namespace of the attribute
+  :name      - the name of the attribute
+  :id        - the id
+  :value     - the value for that id"
+  ([namespace]      (list-impl (construct-keys namespace)))
+  ([namespace name] (list-impl (construct-keys namespace name))))
 
-(defn get-attr
-  "Retrieves the current value of the given attribute."
+(defn get
+  "Returns the current value of the given attribute."
   [namespace name id]
   (.getAttribute (attribute-service) (construct-keys namespace name id)))
 
-(defn set-attr!
+(defn set!
   "Unconditionally sets the value of the given attribute, creating it if it doesn't already exist."
   [namespace name id value]
   (.setAttribute (attribute-service) value (construct-keys namespace name id)))
