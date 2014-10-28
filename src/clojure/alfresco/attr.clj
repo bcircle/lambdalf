@@ -50,7 +50,7 @@
                    :value     value })))
 
 (defn- list-impl
-  "Private implementation of list-attrs."
+  "Private implementation of list."
   [keys]
   (let [result   (atom [])
         callback (proxy [AttributeService$AttributeQueryCallback] []
@@ -66,7 +66,7 @@
   (.exists (attribute-service) (construct-keys namespace name id)))
 
 (defn list
-  "List all attributes in the given namespace, or namespace+name.  Result is a vector of maps, each map containing the keys:
+  "List all attributes in the given namespace, or namespace & name.  Result is a vector of maps, each map containing the keys:
   :namespace - the namespace of the attribute
   :name      - the name of the attribute
   :id        - the id
