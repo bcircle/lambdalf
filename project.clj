@@ -18,9 +18,9 @@
 ;    Peter Monks   - contributor
 
 ; Make sure these line up to those provided in the specified Alfresco version or weird things can happen...
-(def alfresco-version    "4.2.f")
+(def alfresco-version    "5.0.b")
 (def spring-version      "3.0.5.RELEASE")
-(def spring-surf-version "1.2.0")
+(def spring-surf-version "5.0.b")
 
 (defproject org.clojars.lambdalf/lambdalf "0.2.0-SNAPSHOT"
   :title            "lambdalf"
@@ -39,10 +39,10 @@
                 ]
   :profiles {:dev      { :plugins [[lein-amp "0.6.0"]] }
              :test     { :dependencies [
-                                         [clj-http                       "1.0.0"]
+                                         [clj-http                       "1.0.1"]
                                          [tk.skuro.alfresco/h2-support   "1.6"]
-                                         [com.h2database/h2              "1.4.181"]
-                                         [org.eclipse.jetty/jetty-runner "9.2.3.v20140905" :exclusions [org.eclipse.jetty/jetty-jsp]]
+                                         [com.h2database/h2              "1.4.182"]
+                                         [org.eclipse.jetty/jetty-runner "9.3.0.M1" :exclusions [org.eclipse.jetty/jetty-jsp]]
                                        ] }
              :provided { :dependencies [
                                          [org.alfresco/alfresco-core                            ~alfresco-version]
