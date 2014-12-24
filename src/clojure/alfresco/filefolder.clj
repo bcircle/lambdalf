@@ -46,8 +46,8 @@
   ([parent child-name child-type]
    (.getNodeRef (.create (file-folder-service) parent child-name child-type))))
 
-(defn get-file-folder-writer
-  "Returns the ContentWriter for the given node & property (default to cm:content).
+(defn get-writer
+  "Returns the ContentWriter for the given node. Not the same as content/get-writer.
    Should not normally be used directly - write! is preferable."
   ([node] (.getWriter (file-folder-service) node)))
 
@@ -59,10 +59,10 @@
   ([src node]          (write! (ByteArrayInputStream. (.getBytes src "UTF-8")) node)))
 
 (defmethod write! java.io.InputStream
-  ([src node]          (.putContent (get-file-folder-writer node) src)))
+  ([src node]          (.putContent (get-writer node) src)))
 
 (defmethod write! java.io.File
-  ([src node]          (.putContent (get-file-folder-writer node) src)))
+  ([src node]          (.putContent (get-writer node) src)))
 
 (defn delete!
   "Deletes the given node.  Note: duplicate of alfresco.nodes/delete!."
