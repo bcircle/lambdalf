@@ -1,5 +1,6 @@
 ;
 ; Copyright (C) 2011,2012 Peter Monks
+;               2014      Jarl André Hübenthal - added filefolder writers
 ;
 ; Licensed under the Apache License, Version 2.0 (the "License");
 ; you may not use this file except in compliance with the License.
