@@ -20,6 +20,7 @@
             [alfresco.nodes :as n])
   (:import [org.alfresco.service.cmr.model FileFolderService
                                            FileInfo]
+           [java.io File ByteArrayInputStream]
            [org.alfresco.model ContentModel]))
 
 (defn ^FileFolderService file-folder-service
@@ -45,6 +46,24 @@
    (.getNodeRef (.create (file-folder-service) parent child-name ContentModel/TYPE_CONTENT)))
   ([parent child-name child-type]
    (.getNodeRef (.create (file-folder-service) parent child-name child-type))))
+
+(defn get-writer
+  "Returns the ContentWriter for the given node. Not the same as content/get-writer.
+   Should not normally be used directly - write! is preferable."
+  ([node] (.getWriter (file-folder-service) node)))
+
+(defmulti write!
+  "Writes content to the given file or folder"
+  #(type (first %&)))
+
+(defmethod write! java.lang.String
+  ([src node]          (write! (ByteArrayInputStream. (.getBytes src "UTF-8")) node)))
+
+(defmethod write! java.io.InputStream
+  ([src node]          (.putContent (get-writer node) src)))
+
+(defmethod write! java.io.File
+  ([src node]          (.putContent (get-writer node) src)))
 
 (defn delete!
   "Deletes the given node.  Note: duplicate of alfresco.nodes/delete!."
