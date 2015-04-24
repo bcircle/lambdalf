@@ -1,5 +1,6 @@
 (ns spring.surf.webscript
-  (:import [java.io InputStream Writer]))
+  (:import [java.util Map]
+           [java.io InputStream Writer]))
 
 (defn- k2s
   "Returns a map ensuring that keys are all Strings and not clojure keywords"
@@ -15,22 +16,22 @@
 
 (defn args
   "Fetches arguments from the input map by name"
-  [model]
+  [^Map model]
   (s2k (.get model "args")))
 
 (defn req-body-str
   "Returns the HTTP request body as a String"
-  [model]
+  [^Map model]
   (-> model (.get "requestbody") (.getContent)))
 
 (defn template-args
   "Fetches all the template arguments from the webscript UrlModel"
-  [model]
-  (s2k (.getTemplateArgs (.get model "url"))))
+  [^Map model]
+  (s2k (.getTemplateArgs (^String .get model "url"))))
 
 (defn return
   "Updates the view-model with the provided one"
-  [model view-model]
+  [^Map model ^Map view-model]
   (let [view-model-orig (.get model "model")]
     (.putAll view-model-orig (k2s view-model))
     model))

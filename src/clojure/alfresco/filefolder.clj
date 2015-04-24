@@ -20,7 +20,8 @@
             [alfresco.nodes :as n])
   (:import [org.alfresco.service.cmr.model FileFolderService
                                            FileInfo]
-           [java.io File ByteArrayInputStream]
+           [org.alfresco.service.cmr.repository ContentWriter]
+           [java.io File InputStream ByteArrayInputStream]
            [org.alfresco.model ContentModel]))
 
 (defn ^FileFolderService file-folder-service
@@ -47,26 +48,30 @@
   ([parent child-name child-type]
    (.getNodeRef (.create (file-folder-service) parent child-name child-type))))
 
-(defn get-writer
+(defn ^ContentWriter get-writer
   "Returns the ContentWriter for the given node. Not the same as content/get-writer.
    Should not normally be used directly - write! is preferable."
-  ([node] (.getWriter (file-folder-service) node)))
+  [node]
+    (.getWriter (file-folder-service) node))
 
 (defmulti write!
   "Writes content to the given file or folder"
   #(type (first %&)))
 
-(defmethod write! java.lang.String
-  ([src node]          (write! (ByteArrayInputStream. (.getBytes src "UTF-8")) node)))
+(defmethod write! String
+  [^String src node]
+    (write! (ByteArrayInputStream. (.getBytes src "UTF-8")) node))
 
-(defmethod write! java.io.InputStream
-  ([src node]          (.putContent (get-writer node) src)))
+(defmethod write! InputStream
+  [^InputStream src node]
+    (.putContent (get-writer node) src))
 
-(defmethod write! java.io.File
-  ([src node]          (.putContent (get-writer node) src)))
+(defmethod write! File
+  [^java.io.File src node]
+    (.putContent (get-writer node) src))
 
 (defn delete!
-  "Deletes the given node.  Note: duplicate of alfresco.nodes/delete!."
+  "Deletes the given node.  Note: equivalent to, but less flexible than, alfresco.nodes/delete!."
   [node]
   { :pre (exists? node)
     :post (not (exists? node)) }
@@ -96,5 +101,5 @@
 (defmethod find-by-path false
   ([path] (find-by-path path (n/company-home)))
   ([path start-node]
-    (find-by-path (filter #(< 0 (.length %)) (s/split (str path) #"/")) start-node)))
+    (find-by-path (filter #(< 0 (.length ^String %)) (s/split (str path) #"/")) start-node)))
 

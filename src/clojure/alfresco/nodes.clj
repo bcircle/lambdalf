@@ -99,14 +99,14 @@
   (apply conj {} (for [[k v] (apply partition 2 varargs)]
      [k v])))
 
-(defn s2n
+(defn ^NodeRef s2n
   "Converts a String to a NodeRef."
-  [s]
+  [^String s]
   (NodeRef. s))
 
-(defn n2s
+(defn ^String n2s
   "Converts a NodeRef to a String."
-  [n]
+  [^NodeRef n]
   (.toString n))
 
 (extend-protocol Node
@@ -124,18 +124,20 @@
   (site? [node] (= (m/qname SiteModel/TYPE_SITE) (.getType (node-service) node)))
 
   (create-child! [node name params]
-    (let [type        (m/qname (get params :type ContentModel/TYPE_CONTENT))
-          props       (into (zipmap (map m/qname (keys (:props params))) (vals (:props params)))
-                            { ContentModel/PROP_NAME name })  ; Force cm:name to exist in the new node's properties
-          assoc-type  (m/qname (get params :assoc-type ContentModel/ASSOC_CONTAINS))
-          assoc-name  (m/qname (get params :assoc-name name))
-          _           (println "####TEST!!!!\n\tnode =" node "\n\tassoc-type =" assoc-type "\n\tassoc-name =" assoc-name "\n\ttype =" type "\n\tprops =" props)  ; ####TEST!!!
-          child-assoc (.createNode (node-service)
-                                   node
-                                   assoc-type
-                                   assoc-name
-                                   type
-                                   props)]
+    (let [type           (m/qname (get params :type ContentModel/TYPE_CONTENT))
+          props          (into (zipmap (map m/qname (keys (:props params))) (vals (:props params)))
+                               { ContentModel/PROP_NAME name })  ; Force cm:name to exist in the new node's properties
+          assoc-type     (m/qname (get params :assoc-type ContentModel/ASSOC_CONTAINS))
+          assoc-name-str (str "{" (m/namespace-uri type) "}" (m/valid-local-name name))
+          _              (println "####TEST!!!!\n\tassoc-name-str =" assoc-name-str)
+          assoc-name     (m/qname (get params :assoc-name assoc-name-str))
+          _              (println "####TEST!!!!\n\tnode =" node "\n\tassoc-type =" assoc-type "\n\tassoc-name =" assoc-name "\n\ttype =" type "\n\tprops =" props)  ; ####TEST!!!
+          child-assoc    (.createNode (node-service)
+                                      node
+                                      assoc-type
+                                      assoc-name
+                                      type
+                                      props)]
       (.getChildRef child-assoc)))
 
   (create-child-assoc

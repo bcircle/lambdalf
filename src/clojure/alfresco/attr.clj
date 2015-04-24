@@ -35,7 +35,7 @@
 
 (defn- deconstruct-keys
   "Deconstructs keys from the native attribute service into a vector of three elements (some of which may be nil)."
-  [keys]
+  [keys]   ;####TODO: ADD A TYPE HINT HERE (note: not sure what type Java arrays are in Clojure...)
   (condp = (alength keys)
     1 [(aget keys 0) nil           nil]
     2 [(aget keys 0) (aget keys 1) nil]
