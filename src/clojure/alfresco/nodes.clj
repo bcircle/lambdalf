@@ -47,6 +47,11 @@
   (aspects [this] "Provides all the aspect QNames of this node")
   (dir? [this] "True if the node is of type or a subtype of cm:folder")
   (site? [this] "True if the node is of type or a subtype of st:site")
+  (create-child! [this name params] "Creates a new child node. params map may contain:
+    :type - node type. Defaults to cm:content.
+    :props - other properties for the node. Defaults to cm:name=name.
+    :assoc-type - association type. Defaults to cm:contains.
+    :assoc-name - association name. Defaults to name.")
   (create-child-assoc [this propmap] "Creates a new node. Accepts a map containing the following parameters:
    - assoc-type : OPTIONAL - the association type. Defaults to cm:contains
    - assoc : OPTIONAL - the association name. Defaults to the new node cm:name
@@ -117,6 +122,21 @@
   (dir? [node] (= (m/qname ContentModel/TYPE_FOLDER) (.getType (node-service) node)))
 
   (site? [node] (= (m/qname SiteModel/TYPE_SITE) (.getType (node-service) node)))
+
+  (create-child! [node name params]
+    (let [type        (m/qname (get params :type ContentModel/TYPE_CONTENT))
+          props       (into (zipmap (map m/qname (keys (:props params))) (vals (:props params)))
+                            { ContentModel/PROP_NAME name })  ; Force cm:name to exist in the new node's properties
+          assoc-type  (m/qname (get params :assoc-type ContentModel/ASSOC_CONTAINS))
+          assoc-name  (m/qname (get params :assoc-name name))
+          _           (println "####TEST!!!!\n\tnode =" node "\n\tassoc-type =" assoc-type "\n\tassoc-name =" assoc-name "\n\ttype =" type "\n\tprops =" props)  ; ####TEST!!!
+          child-assoc (.createNode (node-service)
+                                   node
+                                   assoc-type
+                                   assoc-name
+                                   type
+                                   props)]
+      (.getChildRef child-assoc)))
 
   (create-child-assoc
     [node {:keys [assoc-type assoc props type]}]
@@ -196,6 +216,7 @@
   (aspects [this] nil)
   (dir? [this] nil)
   (site? [this] nil)
+  (create-child! [this name params] nil)
   (create-child-assoc [this propmap] nil)
   (children [this] nil)
   (parent [this] nil)
