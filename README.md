@@ -113,6 +113,8 @@ Home `nodeRef`.  Note also that unlike Alfresco's native Java API, each `ResultS
 
 [Bug Tracker](https://github.com/lambdalf/lambdalf/issues)
 
+[![Dependencies Status](http://jarkeeper.com/lambdalf/lambdalf/status.svg)](http://jarkeeper.com/lambdalf/lambdalf)
+
 ## License
 
 Copyright © 2011-2014 Carlo Sciolla
