@@ -28,21 +28,21 @@
   :url              "https://github.com/lambdalf/lambdalf"
   :license          { :name "Apache License, Version 2.0"
                       :url "http://www.apache.org/licenses/LICENSE-2.0" }
-  :min-lein-version "2.4.0"
+  :min-lein-version "2.5.0"
   :repositories [
                   ["alfresco.public" "https://artifacts.alfresco.com/nexus/content/groups/public/"]
                 ]
   :dependencies [
                   ; Dependencies that will be included in the AMP - other dependencies should go in the appropriate profile below
-                  [org.clojure/clojure     "1.7.0"]
-                  [org.clojure/tools.nrepl "0.2.10"]
+                  [org.clojure/clojure     "1.8.0"]
+                  [org.clojure/tools.nrepl "0.2.12"]
                 ]
   :profiles {:dev      { :plugins [[lein-amp "0.6.0"]] }
              :test     { :dependencies [
-                                         [clj-http                       "1.1.2"]
+                                         [clj-http                       "2.0.1"]
                                          [tk.skuro.alfresco/h2-support   "1.6"]
-                                         [com.h2database/h2              "1.4.187"]
-                                         [org.eclipse.jetty/jetty-runner "9.3.0.RC1" :exclusions [org.eclipse.jetty/jetty-jsp]]
+                                         [com.h2database/h2              "1.4.190"]
+                                         [org.eclipse.jetty/jetty-runner "9.3.7.RC1" :exclusions [org.eclipse.jetty/jetty-jsp]]
                                        ] }
              :provided { :dependencies [
                                          [org.alfresco/alfresco-core                            ~alfresco-version]
