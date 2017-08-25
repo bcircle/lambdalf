@@ -10,4 +10,6 @@ pom.xml.asc
 .lein-failures
 .nrepl-port
 .shell_history
+.idea
 *.log
+*.iml

@@ -22,7 +22,7 @@
 (def spring-version      "3.0.5.RELEASE")
 (def spring-surf-version "5.0.d")
 
-(defproject org.clojars.lambdalf/lambdalf "0.2.0-SNAPSHOT"
+(defproject org.clojars.lambdalf/lambdalf "0.3.0-SNAPSHOT"
   :title            "lambdalf"
   :description      "Lambdalf -- Clojure support for Alfresco"
   :url              "https://github.com/lambdalf/lambdalf"
@@ -60,6 +60,7 @@
   :java-source-paths ["src/java"]
   :resource-paths    ["src/resource"]
   :amp-source-path   "src/amp"
-  :amp-target-war    [org.alfresco/alfresco ~alfresco-version :extension "war"]
+  ;;:amp-target-war    [org.alfresco/alfresco ~alfresco-version :extension "war"]
+  :amp-target-war    [org.alfresco/alfresco "5.2.0" :extension "war"]
   :javac-target      "1.7"
   )
